@@ -80,5 +80,5 @@ if cam is not None:
         st.write("Image saved successfully!")
 
     # Add a button to restart the app
-    if st.button("Restart App"):
-        st.experimental_rerun()
+if st.button("Restart App"):
+    st.experimental_rerun()
