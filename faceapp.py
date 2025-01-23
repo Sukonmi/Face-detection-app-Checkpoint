@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from PIL import Image
 import io
+from streamlit import experimental_rerun
 
 # Function to convert OpenCV image to PIL image
 def cv2_to_pil(img):
@@ -61,7 +62,7 @@ st.write("- Click on 'Detect Faces' to run the face detection algorithm.")
 st.write("- Click on 'Save Image' to save the image with detected faces.")
 
 # Initialize session state
-if 'restart' not in st.session_state:
+if "restart" not in st.session_state:
     st.session_state.restart = False
 
 # Start the camera
@@ -84,7 +85,7 @@ if cam is not None:
 
 # Add a button to restart the app
 def restart_app():
-    st.session_state.restart = True
+    experimental_rerun()
     st.experimental_rerun()
 
 if st.button("Restart App"):
