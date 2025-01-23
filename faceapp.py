@@ -85,4 +85,4 @@ if cam is not None:
 # Add a button to restart the app
 if st.button("Restart App"):
     st.session_state.restart = True
-    st.experimental_rerun
+    st.experimental_rerun()
