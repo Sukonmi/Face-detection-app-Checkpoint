@@ -61,24 +61,20 @@ st.write("- Click on 'Detect Faces' to run the face detection algorithm.")
 st.write("- Click on 'Save Image' to save the image with detected faces.")
 
 # Start the camera
-cap = cv2.VideoCapture(0)
 
 if st.button("Detect Faces"):
-    ret, frame = cap.read()
-    if not ret:
+    cam = st.camera_input("capture")
+    if not cam:
         st.write("Failed to capture image from camera.")
     else:
-        frame = detect_faces(frame, scale_factor, min_neighbors, bgr_color)
-        st.image(cv2_to_pil(frame), caption="Image with Detected Faces", use_column_width=True)
+        frame = detect_faces(cam, scale_factor, min_neighbors, bgr_color)
+        st.image(cv2_to_pil(cam), caption="Image with Detected Faces", use_column_width=True)
 
         # Add feature to save the image
-        result_img = cv2_to_pil(frame)
+        result_img = cv2_to_pil(cam)
         buf = io.BytesIO()
         result_img.save(buf, format="JPEG")
         byte_im = buf.getvalue()
 
         if st.download_button("Save Image", data=byte_im, file_name="detected_faces.jpg", mime="image/jpeg"):
             st.write("Image saved successfully!")
-
-# Release the camera
-cap.release()
