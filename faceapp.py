@@ -60,10 +60,6 @@ st.write("- Choose the color of the rectangles around detected faces.")
 st.write("- Click on 'Detect Faces' to run the face detection algorithm.")
 st.write("- Click on 'Save Image' to save the image with detected faces.")
 
-# Initialize session state
-if "restart" not in st.session_state:
-    st.session_state.restart = False
-
 # Start the camera
 cam = st.camera_input("Capture Image")
 if cam is not None:
@@ -81,8 +77,3 @@ if cam is not None:
 
     if st.download_button("Save Image", data=byte_im, file_name="detected_faces.jpg", mime="image/jpeg"):
         st.write("Image saved successfully!")
-
-# Add a button to restart the app
-if st.button("Restart App"):
-    st.session_state.restart = True
-    st.experimental_rerun()
