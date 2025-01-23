@@ -62,19 +62,19 @@ st.write("- Click on 'Save Image' to save the image with detected faces.")
 
 # Start the camera
 
-if st.button("Detect Faces"):
-    cam = st.camera_input("capture")
-    if not cam:
-        st.write("Failed to capture image from camera.")
-    else:
-        frame = detect_faces(cam, scale_factor, min_neighbors, bgr_color)
-        st.image(cv2_to_pil(cam), caption="Image with Detected Faces", use_column_width=True)
+cam = st.camera_input("Capture Image")
+if cam is not None:
+    bytes_data = cam.getvalue()
+    frame = np.array(Image.open(io.BytesIO(bytes_data)))
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+    frame = detect_faces(frame, scale_factor, min_neighbors, bgr_color)
+    st.image(cv2_to_pil(frame), caption="Image with Detected Faces", use_column_width=True)
 
-        # Add feature to save the image
-        result_img = cv2_to_pil(cam)
-        buf = io.BytesIO()
-        result_img.save(buf, format="JPEG")
-        byte_im = buf.getvalue()
+    # Add feature to save the image
+    result_img = cv2_to_pil(frame)
+    buf = io.BytesIO()
+    result_img.save(buf, format="JPEG")
+    byte_im = buf.getvalue()
 
-        if st.download_button("Save Image", data=byte_im, file_name="detected_faces.jpg", mime="image/jpeg"):
-            st.write("Image saved successfully!")
+    if st.download_button("Save Image", data=byte_im, file_name="detected_faces.jpg", mime="image/jpeg"):
+        st.write("Image saved successfully!")
