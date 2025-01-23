@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 from PIL import Image
 import io
-from streamlit import experimental_rerun
 
 # Function to convert OpenCV image to PIL image
 def cv2_to_pil(img):
@@ -84,9 +83,6 @@ if cam is not None:
         st.write("Image saved successfully!")
 
 # Add a button to restart the app
-def restart_app():
-    experimental_rerun()
-    st.experimental_rerun()
-
 if st.button("Restart App"):
-    restart_app()
+    st.session_state.restart = True
+    st.experimental_rerun()
