@@ -1,5 +1,2 @@
 streamlit
-cv2
 numpy
-io
-PIL
